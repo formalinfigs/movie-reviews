@@ -10,7 +10,7 @@ export default class Review {
     }
 
     static parse(data) {
-        const review = {
+        return new Review({
             id: data.id,
             title: data.title,
             added: data.added,
@@ -18,8 +18,6 @@ export default class Review {
             path: data.path,
             rating: data.rating,
             user: data.user,
-        };
-
-        return new Review(review);
+        });
     }
 }

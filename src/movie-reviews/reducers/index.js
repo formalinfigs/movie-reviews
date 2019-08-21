@@ -2,7 +2,7 @@ import * as types from '../constants/types';
 
 const initialState = {
     isLoading: false,
-    data: [],
+    reviews: [],
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -13,50 +13,41 @@ const reviewReducer = (state = initialState, action) => {
                 isLoading: true,
             };
         }
+
         case types.FETCH_REVIEWS_SUCCESS: {
             return {
                 ...state,
                 isLoading: false,
-                data: [...action.reviews],
+                reviews: [...action.reviews],
             };
         }
         case types.FETCH_REVIEWS_FAILURE: {
             return {
                 ...state,
                 isLoading: false,
-                data: [],
+                reviews: [],
             };
         }
         case types.EDIT_REVIEW: {
             const { review } = action;
-            const index = state.data.findIndex((item) => item.id === review.id);
+            const index = state.reviews.findIndex((item) => item.id === review.id);
 
             if (index === -1) {
                 return { ...state };
             }
 
-            const reviews = [...state.data];
-            reviews[index] = review;
+            const editedReviews = [...state.reviews];
+            editedReviews[index] = review;
 
             return {
                 ...state,
-                data: reviews,
+                reviews: editedReviews,
             };
         }
-        case types.SORT_REVIEWS_UP_BY_RATING: {
-            const reviews = [...state.data];
-
+        case types.UPDATE_REVIEWS: {
             return {
                 ...state,
-                data: reviews.sort((a, b) => a.rating - b.rating),
-            };
-        }
-        case types.SORT_REVIEWS_DOWN_BY_RATING: {
-            const reviews = [...state.data];
-
-            return {
-                ...state,
-                data: reviews.sort((a, b) => b.rating - a.rating),
+                reviews: action.reviews,
             };
         }
         default:

@@ -1,4 +1,4 @@
-.movie-review-card {
+.movie-reviews-card {
     margin: 5px;
     padding: 5px;
 
@@ -6,30 +6,36 @@
 
     &__title {
         display: inline-block;
-
-        padding-bottom: 1%;
     }
 
     &__content {
         display: block;
 
-        padding-bottom: 1%;
+        text-align: justify;
     }
 
     &__textarea {
         display: block;
 
         width: 100%;
-        margin-bottom: 1%;
+        margin-bottom: 5px;
 
         resize: none;
     }
 
     &__rating {
-        display: inline-block;
+        display: block;
+
+        text-align: left;
     }
 
-    &__button {
+    &__button-container {
+        float: right;
+    }
+
+    &__button-container-item {
         display: block;
+
+        margin: 5px;
     }
 }

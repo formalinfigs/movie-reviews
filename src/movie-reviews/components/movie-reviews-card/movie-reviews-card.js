@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import { Card, Form, Button } from 'react-bootstrap';
+
 import Review from '../../models/review';
 
 import './movie-reviews-card.scss';
@@ -18,17 +20,15 @@ class MovieReviewsCard extends PureComponent {
 
     handleContentChange = (e) => this.setState({ content: e.target.value });
 
-    handleButtonEdit = () => {
-        this.setState({ isEditing: true });
-    };
+    handleButtonEdit = () => this.setState({ isEditing: true });
 
-    handleButtonCancel = () => {
-        this.setState({ isEditing: false, content: this.props.review.content });
-    };
+    handleButtonCancel = () => this.setState({ isEditing: false, content: this.props.review.content });
 
     handleButtonSave = () => {
         this.setState({ isEditing: false });
-        this.props.editReview({ ...this.props.review, content: this.state.content });
+        if (this.props.review.content !== this.state.content) {
+            this.props.editReview({ ...this.props.review, content: this.state.content });
+        }
     };
 
     render() {
@@ -36,33 +36,50 @@ class MovieReviewsCard extends PureComponent {
         const { isEditing, content } = this.state;
 
         return (
-            <div className="movie-review-card">
-                <span className="movie-review-card__title">{review.title}</span>
+            <Card className="movie-reviews-card">
+                <Card.Header as="h5" className="movie-reviews-card__title">
+                    {review.title}
+                </Card.Header>
                 {isEditing ? (
-                    <>
-                        <textarea
-                            className="movie-review-card__textarea"
+                    <Card.Body>
+                        <Form.Control
+                            as="textarea"
+                            rows="4"
+                            className="movie-reviews-card__textarea"
                             value={content}
                             onChange={this.handleContentChange}
                         />
-                        <span className="movie-review-card__rating">Rating: {review.rating}</span>
-                        <button className="movie-review-card__button" onClick={this.handleButtonCancel}>
-                            Cancel
-                        </button>
-                        <button className="movie-review-card__button" onClick={this.handleButtonSave}>
-                            Save
-                        </button>
-                    </>
+                        <span className="movie-reviews-card__rating">Rating: {review.rating}</span>
+                        <div className="movie-reviews-card__button-container">
+                            <Button
+                                variant="light"
+                                className="movie-reviews-card__button-container-item"
+                                onClick={this.handleButtonCancel}>
+                                Cancel
+                            </Button>
+                            <Button
+                                variant="primary"
+                                className="movie-reviews-card__button-container-item"
+                                onClick={this.handleButtonSave}>
+                                Save
+                            </Button>
+                        </div>
+                    </Card.Body>
                 ) : (
-                    <>
-                        <span className="movie-review-card__content">{review.content}</span>
-                        <span className="movie-review-card__rating">Rating: {review.rating}</span>
-                        <button className="movie-review-card__button" onClick={this.handleButtonEdit}>
-                            Edit
-                        </button>
-                    </>
+                    <Card.Body>
+                        <Card.Text className="movie-reviews-card__content">{review.content}</Card.Text>
+                        <span className="movie-reviews-card__rating">Rating: {review.rating}</span>
+                        <div className="movie-reviews-card__button-container">
+                            <Button
+                                variant="primary"
+                                className="movie-reviews-card__button-container-item"
+                                onClick={this.handleButtonEdit}>
+                                Edit
+                            </Button>
+                        </div>
+                    </Card.Body>
                 )}
-            </div>
+            </Card>
         );
     }
 }

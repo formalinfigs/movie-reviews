@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-import reducer from './main/reducers';
-import App from './main/components/app/app';
+import reducer from './movie-reviews/reducers';
+import MovieReviews from './movie-reviews/containers/movie-reviews-container';
 
 import './index.scss';
 
@@ -15,7 +15,7 @@ const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <MovieReviews />
     </Provider>,
     document.getElementById('root'),
 );

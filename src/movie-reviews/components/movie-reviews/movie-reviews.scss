@@ -1,0 +1,31 @@
+.movie-reviews {
+    display: flex;
+
+    max-width: 1000px;
+    margin: auto;
+
+    flex-flow: column nowrap;
+
+    &__buttons {
+        display: flex;
+
+        margin: 5px;
+
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    &__buttons-item {
+        margin: 5px;
+    }
+
+    &__message {
+        display: block;
+
+        margin: 5px auto;
+
+        text-align: center;
+
+        font-size: 2em;
+    }
+}

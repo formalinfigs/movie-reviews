@@ -1,17 +1,19 @@
 import * as controllers from '../controllers';
-import { REVIEWS_KEY } from '../constants';
+import * as constants from '../constants';
 import * as types from '../constants/types';
 import * as storage from '../../shared/tools/storage';
 
 import Review from '../models/review';
 
 const getReviews = async () => {
-    let reviews = storage.getItem(REVIEWS_KEY);
+    let reviews = storage.getItem(constants.REVIEWS_KEY);
 
     if (!reviews) {
         const { data } = await controllers.fetchReviews();
+
         reviews = data.items.map((review, index) => Review.parse({ ...review, id: index }));
-        storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+
+        storage.setItem(constants.REVIEWS_KEY, JSON.stringify(reviews));
     } else {
         reviews = JSON.parse(reviews);
     }
@@ -30,39 +32,33 @@ export const fetchReviews = () => async (dispatch) => {
             reviews: reviews.map((review) => Review.parse(review)),
         });
     } catch (err) {
-        console.log(err);
         dispatch({ type: types.FETCH_REVIEWS_FAILURE });
     }
 };
 
 export const editReview = (review) => async (dispatch, getState) => {
-    try {
-        dispatch({
-            type: types.EDIT_REVIEW,
-            review: Review.parse(review),
-        });
+    dispatch({
+        type: types.EDIT_REVIEW,
+        review: Review.parse(review),
+    });
 
-        const reviews = getState().movieReviews.data;
-        storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
-    } catch (err) {
-        console.log(err);
+    const { reviews } = getState();
+    storage.setItem(constants.REVIEWS_KEY, JSON.stringify(reviews));
+};
+
+export const sortByRating = (desc) => async (dispatch, getState) => {
+    let reviews;
+    if (desc === constants.SORT_UP_DESC) {
+        reviews = [...getState().reviews].sort((a, b) => a.rating - b.rating);
     }
-};
+    if (desc === constants.SORT_DOWN_DESC) {
+        reviews = [...getState().reviews].sort((a, b) => b.rating - a.rating);
+    }
 
-export const sortUpByRating = () => async (dispatch, getState) => {
     dispatch({
-        type: types.SORT_REVIEWS_UP_BY_RATING,
+        type: types.UPDATE_REVIEWS,
+        reviews,
     });
 
-    const reviews = getState().movieReviews.data;
-    storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
-};
-
-export const sortDownByRating = () => async (dispatch, getState) => {
-    dispatch({
-        type: types.SORT_REVIEWS_DOWN_BY_RATING,
-    });
-
-    const reviews = getState().movieReviews.data;
-    storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+    storage.setItem(constants.REVIEWS_KEY, JSON.stringify(reviews));
 };

@@ -15,11 +15,11 @@ class LoaderWrapper extends PureComponent {
         if (this.props.isLoading) {
             return (
                 <div className="loader">
-                    <BeatLoader sizeUnit="px" size={20} color="#2B9E86" loading />
+                    <BeatLoader sizeUnit="px" size={20} color="#0069d9" loading />
                 </div>
             );
         }
-        return React.Children.toArray(this.props.children);
+        return <> {this.props.children}</>;
     }
 }
 
