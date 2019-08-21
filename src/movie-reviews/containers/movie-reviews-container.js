@@ -12,5 +12,7 @@ export default connect(
     (dispatch) => ({
         fetchReviews: () => dispatch(actions.fetchReviews()),
         editReview: (review) => dispatch(actions.editReview(review)),
+        sortUpByRating: () => dispatch(actions.sortUpByRating()),
+        sortDownByRating: () => dispatch(actions.sortDownByRating()),
     }),
 )(MovieReviews);

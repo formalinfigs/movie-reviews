@@ -43,6 +43,22 @@ const reviewReducer = (state = initialState, action) => {
                 data: reviews,
             };
         }
+        case types.SORT_REVIEWS_UP_BY_RATING: {
+            const reviews = [...state.data];
+
+            return {
+                ...state,
+                data: reviews.sort((a, b) => a.rating - b.rating),
+            };
+        }
+        case types.SORT_REVIEWS_DOWN_BY_RATING: {
+            const reviews = [...state.data];
+
+            return {
+                ...state,
+                data: reviews.sort((a, b) => b.rating - a.rating),
+            };
+        }
         default:
             return state;
     }

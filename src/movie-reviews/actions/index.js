@@ -48,3 +48,21 @@ export const editReview = (review) => async (dispatch, getState) => {
         console.log(err);
     }
 };
+
+export const sortUpByRating = () => async (dispatch, getState) => {
+    dispatch({
+        type: types.SORT_REVIEWS_UP_BY_RATING,
+    });
+
+    const reviews = getState().movieReviews.data;
+    storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+};
+
+export const sortDownByRating = () => async (dispatch, getState) => {
+    dispatch({
+        type: types.SORT_REVIEWS_DOWN_BY_RATING,
+    });
+
+    const reviews = getState().movieReviews.data;
+    storage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+};

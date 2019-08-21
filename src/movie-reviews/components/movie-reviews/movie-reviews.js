@@ -11,6 +11,9 @@ class MovieReviews extends PureComponent {
         fetchReviews: PropTypes.func.isRequired,
         editReview: PropTypes.func.isRequired,
 
+        sortUpByRating: PropTypes.func.isRequired,
+        sortDownByRating: PropTypes.func.isRequired,
+
         reviews: PropTypes.arrayOf(PropTypes.instanceOf(Review)),
         isLoading: PropTypes.bool.isRequired,
     };
@@ -25,12 +28,14 @@ class MovieReviews extends PureComponent {
         ));
 
     render() {
-        const { reviews, isLoading } = this.props;
+        const { reviews, isLoading, sortUpByRating, sortDownByRating } = this.props;
 
         return (
             <div className="movie-reviews">
-                <div>Reviews</div>
                 <LoaderWrapper isLoading={isLoading}>
+                    <div>Reviews</div>
+                    <button onClick={sortUpByRating}>Up</button>
+                    <button onClick={sortDownByRating}>Down</button>
                     {reviews.length > 0 ? this.renderReviews(reviews) : <div>No reviews :(</div>}
                 </LoaderWrapper>
             </div>
