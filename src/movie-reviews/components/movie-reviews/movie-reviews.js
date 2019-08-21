@@ -2,13 +2,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import LoaderWrapper from '../../../shared/component/loader/loader';
-import MovieReviewCard from '../movie-review-card/movie-review-card';
+import MovieReviewsCard from '../movie-reviews-card/movie-reviews-card';
 
 import Review from '../../models/review';
 
 class MovieReviews extends PureComponent {
     static propTypes = {
         fetchReviews: PropTypes.func.isRequired,
+        editReview: PropTypes.func.isRequired,
 
         reviews: PropTypes.arrayOf(PropTypes.instanceOf(Review)),
         isLoading: PropTypes.bool.isRequired,
@@ -18,7 +19,10 @@ class MovieReviews extends PureComponent {
         this.props.fetchReviews();
     };
 
-    renderReviews = (reviews) => reviews.map((review) => <MovieReviewCard review={review} />);
+    renderReviews = (reviews) =>
+        reviews.map((review) => (
+            <MovieReviewsCard review={review} key={review.id} editReview={this.props.editReview} />
+        ));
 
     render() {
         const { reviews, isLoading } = this.props;

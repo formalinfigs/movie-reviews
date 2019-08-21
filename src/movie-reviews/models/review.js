@@ -1,5 +1,6 @@
 export default class Review {
     constructor(data) {
+        this.id = data.id;
         this.title = data.title;
         this.added = data.added;
         this.content = data.content;
@@ -10,6 +11,7 @@ export default class Review {
 
     static parse(data) {
         const review = {
+            id: data.id,
             title: data.title,
             added: data.added,
             content: data.content,

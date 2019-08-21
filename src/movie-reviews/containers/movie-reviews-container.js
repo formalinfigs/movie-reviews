@@ -11,5 +11,6 @@ export default connect(
     }),
     (dispatch) => ({
         fetchReviews: () => dispatch(actions.fetchReviews()),
+        editReview: (review) => dispatch(actions.editReview(review)),
     }),
 )(MovieReviews);
